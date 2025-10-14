@@ -30,8 +30,8 @@ This Dockerfile repository is [mirrored on GitLab](https://gitlab.com/coq-commun
 
 > [!TIP]
 >
-> For most use cases, the tags `9.0` (release version) and `dev` (development version) are the most relevant.  
-> Indeed, we recommend to omit the patchlevel field (using `9.0` instead of `9.0-rc1` or `9.0.0`) in your CI,  
+> For most use cases, the tags `9.1` (release version) and `dev` (development version) are the most relevant.  
+> Indeed, we recommend to omit the patchlevel field (using `9.1` instead of `9.1-rc1` or `9.1.0`) in your CI,  
 > so that you need not change the chosen Docker tag when a new patchlevel version of the Rocq Prover is released.
 
 <!-- tags -->
