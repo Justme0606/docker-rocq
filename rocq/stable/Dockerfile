@@ -6,6 +6,8 @@ ENV ROCQ_EXTRA_OPAM="${ROCQ_EXTRA_OPAM}"
 
 ARG ROCQ_VERSION="dev"
 ENV ROCQ_VERSION=${ROCQ_VERSION}
+ARG ROCQ_STDLIB_VERSION="9.0.0"
+ENV ROCQ_STDLIB_VERSION=${ROCQ_STDLIB_VERSION}
 
 # This line is actually unneeded (was already enabled in rocq/base)
 SHELL ["/bin/bash", "--login", "-o", "pipefail", "-c"]
@@ -14,13 +16,12 @@ SHELL ["/bin/bash", "--login", "-o", "pipefail", "-c"]
 RUN set -x \
   && eval $(opam env "--switch=${COMPILER}" --set-switch) \
   && opam update -y -u \
-  && opam pin add -n -k version rocq-stdlib ${ROCQ_VERSION} \
-  && opam pin add -n -k version rocq-prover ${ROCQ_VERSION} \
-  && opam pin add -n -k version rocq-core ${ROCQ_VERSION} \
   && opam pin add -n -k version rocq-runtime ${ROCQ_VERSION} \
+  && opam pin add -n -k version rocq-core ${ROCQ_VERSION} \
   && opam pin add -n -k version coqide-server ${ROCQ_VERSION} \
+  && opam pin add -n -k version rocq-stdlib ${ROCQ_STDLIB_VERSION} \
   # We don't install coq-core nor coq as they're transitional pkgs whose install time is negligible
-  && opam install -y -v -j "${NJOBS}" rocq-prover coqide-server ${ROCQ_EXTRA_OPAM} \
+  && opam install -y -v -j "${NJOBS}" rocq-runtime rocq-core coqide-server rocq-stdlib ${ROCQ_EXTRA_OPAM} \
   && opam clean -a -c -s --logs \
   && chmod -R g=u /home/rocq/.opam \
   && opam config list && opam list
